@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend Quiz App</title>
+    <link rel="icon" type="image/png" href="./assets/images/favicon-32x32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Background Pattern -->
+        <div class="background-pattern" aria-hidden="true"></div>
+        
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="subject-info" id="subject-info" style="display: none;">
+                        <div class="subject-icon">
+                            <img src="" alt="" id="subject-icon-img">
+                        </div>
+                        <h1 class="subject-title" id="subject-title"></h1>
+                    </div>
+                    
+                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                        <svg class="theme-icon sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2.25V4.5M12 19.5V21.75M4.5 12H2.25M6.341 6.341L4.909 4.909M19.091 19.091L17.659 17.659M6.341 17.659L4.909 19.091M19.091 4.909L17.659 6.341M21.75 12H19.5M16.5 12C16.5 14.4853 14.4853 16.5 12 16.5C9.51472 16.5 7.5 14.4853 7.5 12C7.5 9.51472 9.51472 7.5 12 7.5C14.4853 7.5 16.5 9.51472 16.5 12Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div class="toggle-track">
+                            <div class="toggle-thumb"></div>
+                        </div>
+                        <svg class="theme-icon moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <div class="container">
+                <!-- Start Screen -->
+                <section class="start-screen" id="start-screen">
+                    <div class="welcome-section">
+                        <h1 class="welcome-title">
+                            <span class="welcome-subtitle">Welcome to the</span>
+                            <span class="welcome-main">Frontend Quiz!</span>
+                        </h1>
+                        <p class="welcome-description">Pick a subject to get started.</p>
+                    </div>
+                    
+                    <div class="subjects-grid" id="subjects-grid">
+                        <!-- Subjects will be populated by JavaScript -->
+                    </div>
+                </section>
+
+                <!-- Quiz Screen -->
+                <section class="quiz-screen" id="quiz-screen" style="display: none;">
+                    <div class="question-text-container">
+                        <div class="question-counter">
+                            <span class="question-number" id="question-number">1</span>
+                            <span class="question-total">of <span id="question-total">10</span></span>
+                        </div>
+                        <h2 class="question-text" id="question-text"></h2>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="answer-options-container">
+                        <div class="options-grid" id="options-grid">
+                            <!-- Options will be populated by JavaScript -->
+                        </div>
+
+                        <button class="btn btn-primary submit-btn" id="submit-btn" disabled>
+                            Submit Answer
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Results Screen -->
+                <section class="results-screen" id="results-screen" style="display: none;">
+                    <div class="results-header">
+                        <h1 class="results-title">Quiz completed!</h1>
+                        <h2 class="results-subtitle">You scored...</h2>
+                    </div>
+
+                    <div class="score-card">
+                        <div class="score-info">
+                            <div class="subject-icon">
+                                <img src="" alt="" id="results-subject-icon">
+                            </div>
+                            <h3 class="subject-name" id="results-subject-name"></h3>
+                        </div>
+                        <div class="score-display">
+                            <span class="score-number" id="score-number">0</span>
+                            <span class="score-total">out of <span id="results-total">10</span></span>
+                        </div>
+                    </div>
+
+                    <div class="results-actions">
+                        <button class="btn btn-primary" id="play-again-btn">Play Again</button>
+                        <button class="btn btn-secondary" id="back-to-menu-btn">Back to Menu</button>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html> 
