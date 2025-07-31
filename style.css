@@ -8,7 +8,7 @@
 /* CSS Custom Properties (Design System) */
 :root {
     /* Colors - Light Theme */
-    --color-background: hsl(220, 33%, 95%);
+    --color-background: hsl(27, 100%, 96%);
     --color-card: hsl(0, 0%, 100%);
     --color-text-primary: hsl(220, 25%, 20%);
     --color-text-secondary: hsl(220, 15%, 45%);
