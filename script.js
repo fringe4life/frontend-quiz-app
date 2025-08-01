@@ -129,8 +129,12 @@ class QuizApp {
         document.getElementById('subject-info').style.display = 'flex';
         
         // Update header with subject info
-        document.getElementById('subject-icon-img').src = this.currentQuiz.icon;
-        document.getElementById('subject-icon-img').alt = `${this.currentQuiz.title} icon`;
+        const subjectIcon = document.querySelector('.subject-info .subject-icon');
+        const subjectIconImg = document.getElementById('subject-icon-img');
+        
+        subjectIcon.setAttribute('data-subject', this.currentQuiz.title);
+        subjectIconImg.src = this.currentQuiz.icon;
+        subjectIconImg.alt = `${this.currentQuiz.title} icon`;
         document.getElementById('subject-title').textContent = this.currentQuiz.title;
         
         this.renderQuestion();
