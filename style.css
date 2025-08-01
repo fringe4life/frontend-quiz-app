@@ -18,6 +18,12 @@
     --color-border: hsl(220, 15%, 90%);
     --color-shadow: hsl(220, 25%, 20%, 0.1);
     
+    /* Subject Colors */
+    --color-subject-html: hsl(48, 96%, 89%);
+    --color-subject-css: hsl(142, 76%, 36%);
+    --color-subject-javascript: hsl(221, 83%, 53%);
+    --color-subject-accessibility: hsl(270, 50%, 60%);
+    
     /* Typography */
     --font-family: 'Rubik', sans-serif;
     --font-size-xs: 0.875rem; /* 14px */
@@ -37,6 +43,7 @@
     --spacing-2xl: 4rem; /* 64px */
     --spacing-3xl: 8rem; /* 128px */
     --spacing-4xl: 11.5rem; /* 184px */
+    --spacing-5xl: 8.75rem; /* 140px */
     
     /* Border Radius */
     --radius-sm: 0.5rem; /* 8px */
@@ -80,7 +87,7 @@ body {
 .container {
     max-width: var(--container-max-width);
     margin: 0 auto;
-    padding: 0 var(--spacing-md);
+    padding: 0 var(--spacing-5xl); /* 140px left and right for desktop */
 }
 
 /* App Layout */
@@ -111,15 +118,14 @@ body {
 
 /* Header */
 .header {
-    padding: var(--spacing-lg) 0;
-    max-width: 72.5rem; /* 1160px - same as main content */
-    margin: 0 auto;
+    padding: 98px 0 0 0; /* 98px top padding to position theme toggle */
 }
 
 .header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    min-height: 56px; /* Match the height of subject info */
 }
 
 .subject-info {
@@ -128,20 +134,21 @@ body {
     gap: var(--spacing-md);
 }
 
-.subject-icon {
+/* Base subject icon styles - shared between header and cards */
+.subject-icon,
+.subject-card-icon {
     width: var(--icon-size);
     height: var(--icon-size);
     border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--color-primary);
+    background-color: var(--color-primary); /* Default fallback */
 }
 
-.subject-icon img {
-    width: 2.5rem; /* 40px */
-    height: 2.5rem; /* 40px */
-}
+
+
+
 
 .subject-title {
     font-size: var(--font-size-lg);
@@ -151,9 +158,6 @@ body {
 
 /* Theme Toggle */
 .theme-toggle {
-    order: 1;
-    align-self: flex-end;
-    margin-inline-start: auto;
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
@@ -165,6 +169,7 @@ body {
     transition: background-color var(--transition-fast);
     width: 8rem; /* 128px - total width including icons, gap, and track */
     justify-content: space-between;
+    margin-left: auto; /* Push to right when no subject info */
 }
 
 .theme-toggle:hover {
@@ -199,7 +204,7 @@ body {
 
 /* Main Content */
 .main {
-    padding: var(--spacing-2xl) 0;
+    padding: 127px 0 0 0; /* 127px spacing from header to main content */
 }
 
 /* Start Screen */
@@ -247,8 +252,7 @@ body {
 
 /* Subjects Grid */
 .subjects-grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: var(--spacing-md);
 }
 
@@ -272,35 +276,34 @@ body {
     box-shadow: 0 0.5rem 1rem var(--color-shadow);
 }
 
-.subject-card-icon {
-    width: var(--icon-size);
-    height: var(--icon-size);
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+/* Subject card icon inherits base styles from .subject-icon */
 
-/* Subject-specific background colors for both light and dark themes */
+/* Subject-specific background colors - applies to both header and card icons */
+.subject-icon[data-subject="HTML"],
 .subject-card-icon[data-subject="HTML"] {
-    background-color: hsl(48, 96%, 89%); /* orange-50 */
+    background-color: var(--color-subject-html);
 }
 
+.subject-icon[data-subject="CSS"],
 .subject-card-icon[data-subject="CSS"] {
-    background-color: hsl(142, 76%, 36%); /* green-100 */
+    background-color: var(--color-subject-css);
 }
 
+.subject-icon[data-subject="JavaScript"],
 .subject-card-icon[data-subject="JavaScript"] {
-    background-color: hsl(221, 83%, 53%); /* blue-50 */
+    background-color: var(--color-subject-javascript);
 }
 
+.subject-icon[data-subject="Accessibility"],
 .subject-card-icon[data-subject="Accessibility"] {
-    background-color: hsl(270, 50%, 60%); /* purple-100 */
+    background-color: var(--color-subject-accessibility);
 }
 
+/* Subject icon images - shared between header and cards */
+.subject-icon img,
 .subject-card-icon img {
     width: 2.5rem; /* 40px */
-   aspect-ratio: 1;
+    aspect-ratio: 1;
 }
 
 .subject-card-title {
@@ -314,15 +317,14 @@ body {
     max-width: 72.5rem; /* 1160px - same as main content */
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 29rem 35.25rem; /* 465px 564px - matching Figma layout */
+    grid-template-columns: 29rem 1fr; /* 465px 564px - matching Figma layout */
     gap: var(--spacing-2xl);
     align-items: start;
 }
 
 .question-text-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem; /* 24px between counter and question */
+    display: grid;
+    gap: var(--spacing-md); /* 24px between counter and question */
 }
 
 .question-text-container .question-text {
@@ -330,8 +332,7 @@ body {
 }
 
 .answer-options-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: var(--spacing-2xl);
 }
 
@@ -382,8 +383,7 @@ body {
 
 /* Options Grid */
 .options-grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: var(--spacing-md);
 }
 
@@ -425,7 +425,7 @@ body {
 
 .option-letter {
     width: 2.5rem; /* 40px */
-    height: 2.5rem; /* 40px */
+   aspect-ratio: 1;
     border-radius: 50%;
     background-color: var(--color-border);
     display: flex;
@@ -552,8 +552,7 @@ body {
 }
 
 .score-display {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     align-items: center;
     gap: var(--spacing-xs);
 }
@@ -571,13 +570,35 @@ body {
 }
 
 .results-actions {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: var(--spacing-md);
 }
 
 /* Responsive Design */
 @media (max-width: 75rem) { /* 1200px */
+    .container {
+        padding: 0 var(--spacing-2xl); /* 64px left and right for tablet */
+    }
+    
+    .header {
+        padding: 208px 0 0 0; /* 208px top padding for tablet */
+    }
+    
+    .main {
+        padding: 75px 0 0 0; /* 75px spacing from header to main content for tablet */
+    }
+    
+    /* Tablet background pattern */
+    .background-pattern {
+        background-image: url('./assets/images/pattern-background-tablet-light.svg');
+    }
+    
+    [data-theme="dark"] .background-pattern {
+        background-image: url('./assets/images/pattern-background-tablet-dark.svg');
+    }
+}
+
+@media (max-width: 60rem) { /* 960px */
     .start-screen {
         grid-template-columns: 1fr;
         gap: var(--spacing-xl);
@@ -595,15 +616,6 @@ body {
     .question-text-container .question-text {
         margin-bottom: var(--spacing-lg); /* 40px gap at tablet */
     }
-    
-    /* Tablet background pattern */
-    .background-pattern {
-        background-image: url('./assets/images/pattern-background-tablet-light.svg');
-    }
-    
-    [data-theme="dark"] .background-pattern {
-        background-image: url('./assets/images/pattern-background-tablet-dark.svg');
-    }
 }
 
 @media (max-width: 48rem) { /* 768px */
@@ -615,15 +627,15 @@ body {
     }
     
     .container {
-        padding: 0 var(--spacing-sm);
+        padding: 0 var(--spacing-md); /* 24px left and right for mobile */
     }
     
     .header {
-        padding: var(--spacing-md) 0;
+        padding: 32px 0 0 0; /* 32px top padding for mobile */
     }
     
     .main {
-        padding: var(--spacing-xl) 0;
+        padding: 46px 0 0 0; /* 46px spacing from header to main content for mobile */
     }
     
     .question-container {
@@ -653,17 +665,6 @@ body {
 }
 
 @media (max-width: 30rem) { /* 480px */
-    .header-content {
-        flex-direction: column;
-        gap: var(--spacing-md);
-    }
-    
-    .subject-info {
-        order: 2;
-    }
-    
-   
-    
     .results-actions {
         flex-direction: column;
     }
