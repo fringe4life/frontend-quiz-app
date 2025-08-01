@@ -18,15 +18,15 @@
         <!-- Header -->
         <header class="header">
             <div class="container">
-                <div class="header-content">
-                    <div class="subject-info" id="subject-info" style="display: none;">
-                        <div class="subject-icon">
+                <div class="header-content between">
+                    <div class="subject-info start" id="subject-info" style="display: none;">
+                        <div class="subject-icon center">
                             <img src="" alt="" id="subject-icon-img">
                         </div>
                         <h1 class="subject-title" id="subject-title"></h1>
                     </div>
                     
-                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <button class="theme-toggle between" id="theme-toggle" aria-label="Toggle theme">
                         <svg class="theme-icon sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 2.25V4.5M12 19.5V21.75M4.5 12H2.25M6.341 6.341L4.909 4.909M19.091 19.091L17.659 17.659M6.341 17.659L4.909 19.091M19.091 4.909L17.659 6.341M21.75 12H19.5M16.5 12C16.5 14.4853 14.4853 16.5 12 16.5C9.51472 16.5 7.5 14.4853 7.5 12C7.5 9.51472 9.51472 7.5 12 7.5C14.4853 7.5 16.5 9.51472 16.5 12Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -45,7 +45,7 @@
         <main class="main">
             <div class="container">
                 <!-- Start Screen -->
-                <section class="start-screen" id="start-screen">
+                <section class="start-screen screen-visible" id="start-screen">
                     <div class="welcome-section">
                         <h1 class="welcome-title">
                             <span class="welcome-subtitle">Welcome to the</span>
@@ -60,7 +60,7 @@
                 </section>
 
                 <!-- Quiz Screen -->
-                <section class="quiz-screen" id="quiz-screen" style="display: none;">
+                <section class="quiz-screen screen-hidden" id="quiz-screen">
                     <div class="question-text-container">
                         <div class="question-counter">
                             <span class="question-number" id="question-number">1</span>
@@ -77,22 +77,22 @@
                             <!-- Options will be populated by JavaScript -->
                         </div>
 
-                        <button class="btn btn-primary submit-btn" id="submit-btn" disabled>
+                        <button class="btn btn-primary submit-btn center" id="submit-btn" disabled>
                             Submit Answer
                         </button>
                     </div>
                 </section>
 
                 <!-- Results Screen -->
-                <section class="results-screen" id="results-screen" style="display: none;">
+                <section class="results-screen screen-hidden" id="results-screen">
                     <div class="results-header">
                         <h1 class="results-title">Quiz completed!</h1>
                         <h2 class="results-subtitle">You scored...</h2>
                     </div>
 
                     <div class="score-card">
-                        <div class="score-info">
-                            <div class="subject-icon">
+                        <div class="score-info center">
+                            <div class="subject-icon center">
                                 <img src="" alt="" id="results-subject-icon">
                             </div>
                             <h3 class="subject-name" id="results-subject-name"></h3>
@@ -104,8 +104,8 @@
                     </div>
 
                     <div class="results-actions">
-                        <button class="btn btn-primary" id="play-again-btn">Play Again</button>
-                        <button class="btn btn-secondary" id="back-to-menu-btn">Back to Menu</button>
+                        <button class="btn btn-primary center" id="play-again-btn">Play Again</button>
+                        <button class="btn btn-secondary center" id="back-to-menu-btn">Back to Menu</button>
                     </div>
                 </section>
             </div>

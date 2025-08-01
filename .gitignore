@@ -38,3 +38,6 @@ npm-debug.log*
 *.pem
 .DS_Store
 Thumbs.db
+
+# Style guides and documentation
+coding-style-guide.md

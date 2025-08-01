@@ -71,7 +71,9 @@ class QuizApp {
     
     renderStartScreen() {
         this.hideAllScreens();
-        document.getElementById('start-screen').style.display = 'grid';
+        const startScreen = document.getElementById('start-screen');
+        startScreen.classList.remove('screen-hidden');
+        startScreen.classList.add('screen-visible');
         document.getElementById('subject-info').style.display = 'none';
         
         this.renderSubjects();
@@ -90,13 +92,13 @@ class QuizApp {
     
     createSubjectCard(quiz, index) {
         const card = document.createElement('div');
-        card.className = 'subject-card';
+        card.className = 'subject-card start';
         card.setAttribute('role', 'button');
         card.setAttribute('tabindex', '0');
         card.setAttribute('aria-label', `Start ${quiz.title} quiz`);
         
         card.innerHTML = `
-            <div class="subject-card-icon" data-subject="${quiz.title}">
+            <div class="subject-icon center" data-subject="${quiz.title}">
                 <img src="${quiz.icon}" alt="${quiz.title} icon" width="40" height="40">
             </div>
             <h2 class="subject-card-title">${quiz.title}</h2>
@@ -125,7 +127,9 @@ class QuizApp {
     
     startQuiz() {
         this.hideAllScreens();
-        document.getElementById('quiz-screen').style.display = 'grid';
+        const quizScreen = document.getElementById('quiz-screen');
+        quizScreen.classList.remove('screen-hidden');
+        quizScreen.classList.add('screen-visible');
         document.getElementById('subject-info').style.display = 'flex';
         
         // Update header with subject info
@@ -191,7 +195,7 @@ class QuizApp {
     
     createOptionCard(optionText, letter, index) {
         const card = document.createElement('div');
-        card.className = 'option-card';
+        card.className = 'option-card start';
         card.setAttribute('role', 'button');
         card.setAttribute('tabindex', '0');
         card.setAttribute('aria-label', `Option ${letter}: ${optionText}`);
@@ -200,11 +204,13 @@ class QuizApp {
         const escapedOptionText = this.escapeHtml(optionText);
         
         card.innerHTML = `
-            <div class="option-letter">${letter}</div>
+            <div class="option-letter center">
+                <span class="letter-text">${letter}</span>
+            </div>
             <div class="option-text">${escapedOptionText}</div>
             <div class="option-icon">
-                <img src="./assets/images/icon-correct.svg" alt="Correct answer" width="40" height="40" class="correct-icon" style="display: none;">
-                <img src="./assets/images/icon-incorrect.svg" alt="Incorrect answer" width="40" height="40" class="incorrect-icon" style="display: none;">
+                <img src="./assets/images/icon-correct.svg" alt="Correct answer" width="40" height="40" class="correct-icon hidden">
+                <img src="./assets/images/icon-incorrect.svg" alt="Incorrect answer" width="40" height="40" class="incorrect-icon hidden">
             </div>
         `;
         
@@ -267,6 +273,12 @@ class QuizApp {
         const optionCards = document.querySelectorAll('.option-card');
         const question = this.currentQuiz.questions[this.currentQuestionIndex];
         
+        // Clear any existing show classes first
+        document.querySelectorAll('.option-icon img').forEach(img => {
+            img.classList.remove('show');
+            img.classList.add('hidden');
+        });
+        
         optionCards.forEach((card, index) => {
             const optionText = card.querySelector('.option-text').textContent;
             const isSelected = index === this.selectedAnswer;
@@ -274,12 +286,24 @@ class QuizApp {
             const correctIcon = card.querySelector('.correct-icon');
             const incorrectIcon = card.querySelector('.incorrect-icon');
             
+            console.log('Option:', optionText, 'Answer:', question.answer, 'IsCorrect:', isCorrectAnswer, 'IsSelected:', isSelected);
+            
             if (isCorrectAnswer) {
                 card.classList.add('option-card--correct');
-                correctIcon.style.display = 'block';
-            } else if (isSelected && !isCorrect) {
+                correctIcon.classList.remove('hidden');
+                correctIcon.classList.add('show');
+                console.log('Showing correct icon for option:', optionText);
+            } else if (isSelected && !isCorrectAnswer) {
                 card.classList.add('option-card--incorrect');
-                incorrectIcon.style.display = 'block';
+                incorrectIcon.classList.remove('hidden');
+                incorrectIcon.classList.add('show');
+                console.log('Showing incorrect icon for option:', optionText);
+            } else {
+                // Ensure other icons are hidden
+                correctIcon.classList.remove('show');
+                correctIcon.classList.add('hidden');
+                incorrectIcon.classList.remove('show');
+                incorrectIcon.classList.add('hidden');
             }
         });
         
@@ -300,12 +324,16 @@ class QuizApp {
     
     showResults() {
         this.hideAllScreens();
-        document.getElementById('results-screen').style.display = 'block';
+        const resultsScreen = document.getElementById('results-screen');
+        resultsScreen.classList.remove('screen-hidden');
+        resultsScreen.classList.add('screen-visible');
         document.getElementById('subject-info').style.display = 'flex';
         
         // Update results
-        document.getElementById('results-subject-icon').src = this.currentQuiz.icon;
-        document.getElementById('results-subject-icon').alt = `${this.currentQuiz.title} icon`;
+        const resultsSubjectIcon = document.getElementById('results-subject-icon');
+        resultsSubjectIcon.src = this.currentQuiz.icon;
+        resultsSubjectIcon.alt = `${this.currentQuiz.title} icon`;
+        resultsSubjectIcon.parentElement.setAttribute('data-subject', this.currentQuiz.title);
         document.getElementById('results-subject-name').textContent = this.currentQuiz.title;
         document.getElementById('score-number').textContent = this.score;
         document.getElementById('results-total').textContent = this.currentQuiz.questions.length;
@@ -320,7 +348,9 @@ class QuizApp {
     
     showStartScreen() {
         this.hideAllScreens();
-        document.getElementById('start-screen').style.display = 'grid';
+        const startScreen = document.getElementById('start-screen');
+        startScreen.classList.remove('screen-hidden');
+        startScreen.classList.add('screen-visible');
         document.getElementById('subject-info').style.display = 'none';
         
         this.addAnimation('start-screen', 'fade-in');
@@ -335,7 +365,9 @@ class QuizApp {
     hideAllScreens() {
         const screens = ['start-screen', 'quiz-screen', 'results-screen'];
         screens.forEach(screenId => {
-            document.getElementById(screenId).style.display = 'none';
+            const screen = document.getElementById(screenId);
+            screen.classList.add('screen-hidden');
+            screen.classList.remove('screen-visible');
         });
     }
     
@@ -366,7 +398,8 @@ class QuizApp {
         
         // Handle Escape key to go back
         if (e.key === 'Escape') {
-            if (document.getElementById('quiz-screen').style.display !== 'none') {
+            const quizScreen = document.getElementById('quiz-screen');
+            if (!quizScreen.classList.contains('screen-hidden')) {
                 this.showStartScreen();
             }
         }
