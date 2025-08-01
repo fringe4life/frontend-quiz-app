@@ -144,7 +144,7 @@ body {
 .app {
     min-height: 100svh;
     position: relative;
-    overflow: hidden; /* Changed from overflow-x to overflow to prevent double scrollbars */
+    overflow: hidden; 
     contain: content;
 }
 
@@ -164,10 +164,6 @@ body {
 /* Header */
 .header {
     padding: 98px 0 0 0; /* 98px top padding to position theme toggle */
-}
-
-.header-content {
-    min-height: 56px; /* Match the height of subject info */
 }
 
 .subject-info {
@@ -268,14 +264,18 @@ body {
     padding: 127px 0 0 0; /* 127px spacing from header to main content */
 }
 
-/* Start Screen */
-.start-screen {
+/* Base Screen Layout */
+.screen {
     display: grid;
-    grid-template-columns: max-content 1fr;
-    gap: var(--spacing-3xl);
+    grid-template-columns: 29rem 1fr;
     max-inline-size: 72.5rem; /* 1160px */
     margin-inline: auto;
     contain: content;
+}
+
+/* Start Screen */
+.start-screen {
+    gap: var(--spacing-3xl);
 }
 
 .welcome-section {
@@ -347,19 +347,18 @@ body {
 
 /* Quiz Screen */
 .quiz-screen {
-    max-inline-size: 72.5rem; /* 1160px - same as main content */
-    margin-inline: auto;
-    display: grid;
-    grid-template-columns: 29rem 1fr; /* 465px 564px - matching Figma layout */
     gap: var(--spacing-2xl);
     align-items: start;
+}
+
+/* Base container class */
+.container-grid {
+    display: grid;
     contain: content;
 }
 
 .question-text-container {
-    display: grid;
     gap: var(--spacing-md); /* 24px between counter and question */
-    contain: content;
 }
 
 .question-text {
@@ -371,9 +370,7 @@ body {
 }
 
 .answer-options-container {
-    display: grid;
     gap: var(--spacing-lg);
-    contain: content;
 }
 
 .question-counter {
@@ -415,9 +412,7 @@ body {
 
 /* Options Grid */
 .options-grid {
-    display: grid;
     gap: var(--spacing-sm);
-    contain: content;
 }
 
 .option-card {
@@ -428,37 +423,34 @@ body {
     border-radius: var(--radius-md);
     cursor: pointer;
     transition: all var(--transition-normal);
-    position: relative;
 }
 
-.option-card:hover:not(.option-card--selected):not(.option-card--correct):not(.option-card--incorrect) {
+.option-card:hover:not(.selected, .correct, .incorrect) {
     border-color: var(--color-primary);
     background-color: var(--color-shadow);
 }
 
-/* Option card states */
-:is(.option-card--selected, .option-card--correct, .option-card--incorrect) {
+.option-card:is(.selected, .correct, .incorrect) {
+    border-color: var(--_state-color);
     color: white;
 }
 
-.option-card--selected {
-    border-color: var(--color-primary);
-    background-color: var(--color-card); /* Keep original background color */
+/* Option card modifiers */
+.option-card.selected {
+    --_state-color: var(--color-primary);
 }
 
-.option-card--correct {
-    border-color: var(--color-correct);
-    background-color: var(--color-card); /* Keep original background color */
+.option-card.correct {
+    --_state-color: var(--color-correct);
 }
 
-.option-card--incorrect {
-    border-color: var(--color-incorrect);
-    background-color: var(--color-card); /* Keep original background color */
+.option-card.incorrect {
+    --_state-color: var(--color-incorrect);
 }
 
 .option-letter {
     inline-size: var(--icon-size-small);
-    border-radius: var(--radius-xs); /* 8px instead of circle */
+    border-radius: var(--radius-xs);
     background-color: var(--color-border);
     font-size: var(--font-size-base);
     font-weight: 500;
@@ -468,26 +460,11 @@ body {
     contain: strict;
 }
 
-/* Option letter states */
-.option-card--selected .option-letter {
-    background-color: var(--color-primary);
-    border: 2px solid var(--color-primary);
+/* Option letter modifiers */
+.option-card:is(.selected, .correct, .incorrect) .option-letter {
+    background-color: var(--_state-color);
     color: white;
 }
-
-.option-card--correct .option-letter {
-    background-color: var(--color-correct);
-    border: 2px solid var(--color-correct);
-    color: white;
-}
-
-.option-card--incorrect .option-letter {
-    background-color: var(--color-incorrect);
-    border: 2px solid var(--color-incorrect);
-    color: white;
-}
-
-
 
 .option-text {
     font-size: var(--font-size-lg);
@@ -496,14 +473,14 @@ body {
 }
 
 .option-icon {
-    justify-self: flex-end;
     position: relative;
-    flex: 1;
+    flex: 0 0 var(--icon-size-small);
 }
 
 .option-icon img {
     position: absolute;
     inset: 0;
+    margin: auto;
     inline-size: var(--icon-size-small);
     aspect-ratio: 1;
 }
@@ -519,7 +496,6 @@ body {
     text-decoration: none;
     cursor: pointer;
     transition: all var(--transition-normal);
-    min-height: var(--card-height);
     position: relative;
 }
 
@@ -577,16 +553,10 @@ body {
 
 /* Results Screen */
 .results-screen {
-    display: grid;
-    grid-template-columns: max-content 1fr;
     gap: var(--spacing-6xl); /* 144px gap at desktop */
-    max-inline-size: 72.5rem; /* 1160px - same as start screen */
-    margin-inline: auto;
-    contain: content;
 }
 
 .results-header {
-    display: grid;
     gap: 0;
     grid-template-rows: min-content min-content;
 }
@@ -622,7 +592,6 @@ body {
 }
 
 .score-display {
-    display: grid;
     align-items: center;
     gap: var(--spacing-xs);
 }
@@ -640,9 +609,7 @@ body {
 }
 
 .results-actions {
-    display: grid;
     gap: var(--spacing-lg); /* 2rem gap at desktop/tablet */
-    contain: content;
 }
 
 /* Responsive Design */
@@ -670,8 +637,11 @@ body {
 }
 
 @media (max-width: 60rem) { /* 960px */
-    .start-screen {
+    .screen {
         grid-template-columns: 1fr;
+    }
+    
+    .start-screen {
         gap: var(--spacing-xl);
     }
     
@@ -680,7 +650,6 @@ body {
     }
     
     .quiz-screen {
-        grid-template-columns: 1fr;
         gap: var(--spacing-xl);
     }
     
@@ -689,7 +658,6 @@ body {
     }
     
     .results-screen {
-        grid-template-columns: 1fr;
         gap: var(--spacing-2xl); /* 64px gap at tablet */
     }
 }
@@ -828,7 +796,6 @@ body {
 
 .fade-in {
     animation-name: --fade-in;
-    animation-duration: 0.5s;
 }
 
 .slide-in {

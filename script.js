@@ -1,16 +1,58 @@
-// Quiz App State Management
+/**
+ * @typedef {Object} Quiz
+ * @property {string} title - The title of the quiz (e.g., "HTML", "CSS")
+ * @property {string} icon - The path to the quiz icon image
+ * @property {Array<Question>} questions - Array of questions for this quiz
+ */
+
+/**
+ * @typedef {Object} Question
+ * @property {string} question - The question text
+ * @property {Array<string>} options - Array of possible answer options
+ * @property {string} answer - The correct answer from the options array
+ */
+
+/**
+ * @typedef {Object} QuizData
+ * @property {Array<Quiz>} quizzes - Array of available quizzes
+ */
+
+/**
+ * Quiz App State Management
+ * Main class that handles the quiz application logic, state management, and UI interactions.
+ */
 class QuizApp {
+    /**
+     * Creates a new QuizApp instance and initializes the application.
+     * @constructor
+     */
     constructor() {
+        /** @type {Array<Quiz>} Available quizzes loaded from data.json */
         this.quizzes = [];
+        
+        /** @type {Quiz|null} Currently selected quiz */
         this.currentQuiz = null;
+        
+        /** @type {number} Current question index (0-based) */
         this.currentQuestionIndex = 0;
+        
+        /** @type {number} Current score (number of correct answers) */
         this.score = 0;
+        
+        /** @type {number|null} Index of the currently selected answer option */
         this.selectedAnswer = null;
+        
+        /** @type {boolean} Whether the current question has been answered */
         this.answered = false;
         
         this.init();
     }
     
+    /**
+     * Initializes the quiz application by loading data and setting up the UI.
+     * @async
+     * @throws {Error} If quiz data fails to load
+     */
     async init() {
         try {
             await this.loadQuizzes();
@@ -23,12 +65,18 @@ class QuizApp {
         }
     }
     
+    /**
+     * Loads quiz data from the data.json file.
+     * @async
+     * @throws {Error} If the fetch request fails or response is not ok
+     */
     async loadQuizzes() {
         try {
             const response = await fetch('./data.json');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
+            /** @type {QuizData} */
             const data = await response.json();
             this.quizzes = data.quizzes;
         } catch (error) {
@@ -37,6 +85,10 @@ class QuizApp {
         }
     }
     
+    /**
+     * Sets up all event listeners for user interactions.
+     * Includes theme toggle, navigation buttons, submit button, and keyboard events.
+     */
     setupEventListeners() {
         // Theme toggle
         const themeToggle = document.getElementById('theme-toggle');
@@ -53,11 +105,19 @@ class QuizApp {
         document.addEventListener('keydown', (e) => this.handleKeyboard(e));
     }
     
+    /**
+     * Loads the saved theme from localStorage and applies it to the document.
+     * Defaults to 'light' theme if no theme is saved.
+     */
     loadTheme() {
         const savedTheme = localStorage.getItem('quiz-theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
     }
     
+    /**
+     * Toggles between light and dark themes.
+     * Saves the new theme to localStorage and announces the change for screen readers.
+     */
     toggleTheme() {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
@@ -69,6 +129,10 @@ class QuizApp {
         this.announceToScreenReader(`Switched to ${newTheme} theme`);
     }
     
+    /**
+     * Renders the start screen with subject selection.
+     * Hides all other screens and shows the start screen with subject cards.
+     */
     renderStartScreen() {
         this.hideAllScreens();
         const startScreen = document.getElementById('start-screen');
@@ -80,6 +144,10 @@ class QuizApp {
         this.addAnimation('start-screen', 'fade-in');
     }
     
+    /**
+     * Renders all available subject cards in the subjects grid.
+     * Clears the grid and populates it with subject cards for each quiz.
+     */
     renderSubjects() {
         const subjectsGrid = document.getElementById('subjects-grid');
         subjectsGrid.innerHTML = '';
@@ -90,6 +158,12 @@ class QuizApp {
         });
     }
     
+    /**
+     * Creates a subject card element for the given quiz.
+     * @param {Quiz} quiz - The quiz object to create a card for
+     * @param {number} index - The index of the quiz in the quizzes array
+     * @returns {HTMLElement} The created subject card element
+     */
     createSubjectCard(quiz, index) {
         const card = document.createElement('div');
         card.className = 'subject-card start';
@@ -115,6 +189,11 @@ class QuizApp {
         return card;
     }
     
+    /**
+     * Selects a quiz and starts it.
+     * Resets the quiz state and begins the quiz with the selected subject.
+     * @param {number} quizIndex - The index of the quiz to select
+     */
     selectSubject(quizIndex) {
         this.currentQuiz = this.quizzes[quizIndex];
         this.currentQuestionIndex = 0;
@@ -125,6 +204,10 @@ class QuizApp {
         this.startQuiz();
     }
     
+    /**
+     * Starts the selected quiz.
+     * Shows the quiz screen, updates the header with subject info, and renders the first question.
+     */
     startQuiz() {
         this.hideAllScreens();
         const quizScreen = document.getElementById('quiz-screen');
@@ -145,6 +228,10 @@ class QuizApp {
         this.addAnimation('quiz-screen', 'slide-in');
     }
     
+    /**
+     * Renders the current question with its options.
+     * Updates the question counter, progress bar, question text, and renders answer options.
+     */
     renderQuestion() {
         const question = this.currentQuiz.questions[this.currentQuestionIndex];
         
@@ -175,12 +262,21 @@ class QuizApp {
         }, 100);
     }
     
+    /**
+     * Escapes HTML characters in text to prevent XSS attacks.
+     * @param {string} text - The text to escape
+     * @returns {string} The escaped HTML text
+     */
     escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
     }
     
+    /**
+     * Renders the answer options for the current question.
+     * @param {Array<string>} options - Array of answer option strings
+     */
     renderOptions(options) {
         const optionsGrid = document.getElementById('options-grid');
         optionsGrid.innerHTML = '';
@@ -193,6 +289,13 @@ class QuizApp {
         });
     }
     
+    /**
+     * Creates an option card element for the given option.
+     * @param {string} optionText - The text of the option
+     * @param {string} letter - The letter label (A, B, C, D)
+     * @param {number} index - The index of the option
+     * @returns {HTMLElement} The created option card element
+     */
     createOptionCard(optionText, letter, index) {
         const card = document.createElement('div');
         card.className = 'option-card start';
@@ -225,18 +328,23 @@ class QuizApp {
         return card;
     }
     
+    /**
+     * Selects an answer option for the current question.
+     * Updates the UI to show the selected option and enables the submit button.
+     * @param {number} optionIndex - The index of the selected option
+     */
     selectOption(optionIndex) {
         if (this.answered) return;
         
         // Remove previous selection
-        const previousSelected = document.querySelector('.option-card--selected');
+        const previousSelected = document.querySelector('.option-card.selected');
         if (previousSelected) {
-            previousSelected.classList.remove('option-card--selected');
+            previousSelected.classList.remove('selected');
         }
         
         // Select new option
         const optionCards = document.querySelectorAll('.option-card');
-        optionCards[optionIndex].classList.add('option-card--selected');
+        optionCards[optionIndex].classList.add('selected');
         
         this.selectedAnswer = optionIndex;
         document.getElementById('submit-btn').disabled = false;
@@ -246,6 +354,11 @@ class QuizApp {
         this.announceToScreenReader(`Selected option ${letters[optionIndex]}`);
     }
     
+    /**
+     * Submits the selected answer and shows the result.
+     * Checks if the answer is correct, updates the score, and shows visual feedback.
+     * Auto-advances to the next question after 2 seconds.
+     */
     submitAnswer() {
         if (this.selectedAnswer === null || this.answered) return;
         
@@ -269,6 +382,11 @@ class QuizApp {
         }, 2000);
     }
     
+    /**
+     * Shows the result of the submitted answer with visual feedback.
+     * Displays correct/incorrect icons and updates card styling.
+     * @param {boolean} isCorrect - Whether the submitted answer was correct
+     */
     showAnswerResult(isCorrect) {
         const optionCards = document.querySelectorAll('.option-card');
         const question = this.currentQuiz.questions[this.currentQuestionIndex];
@@ -289,12 +407,12 @@ class QuizApp {
             console.log('Option:', optionText, 'Answer:', question.answer, 'IsCorrect:', isCorrectAnswer, 'IsSelected:', isSelected);
             
             if (isCorrectAnswer) {
-                card.classList.add('option-card--correct');
+                card.classList.add('correct');
                 correctIcon.classList.remove('hidden');
                 correctIcon.classList.add('show');
                 console.log('Showing correct icon for option:', optionText);
             } else if (isSelected && !isCorrectAnswer) {
-                card.classList.add('option-card--incorrect');
+                card.classList.add('incorrect');
                 incorrectIcon.classList.remove('hidden');
                 incorrectIcon.classList.add('show');
                 console.log('Showing incorrect icon for option:', optionText);
@@ -312,6 +430,10 @@ class QuizApp {
         this.announceToScreenReader(result);
     }
     
+    /**
+     * Advances to the next question or shows results if all questions are complete.
+     * Increments the question index and either renders the next question or shows the results screen.
+     */
     nextQuestion() {
         this.currentQuestionIndex++;
         
@@ -322,6 +444,10 @@ class QuizApp {
         }
     }
     
+    /**
+     * Shows the results screen with the final score.
+     * Updates the results display with subject info, score, and total questions.
+     */
     showResults() {
         this.hideAllScreens();
         const resultsScreen = document.getElementById('results-screen');
@@ -346,6 +472,10 @@ class QuizApp {
         }, 100);
     }
     
+    /**
+     * Shows the start screen and returns to subject selection.
+     * Hides all other screens and shows the start screen with subject cards.
+     */
     showStartScreen() {
         this.hideAllScreens();
         const startScreen = document.getElementById('start-screen');
@@ -362,6 +492,10 @@ class QuizApp {
         }, 100);
     }
     
+    /**
+     * Hides all screen elements by adding the screen-hidden class.
+     * Used before showing a specific screen to ensure only one screen is visible at a time.
+     */
     hideAllScreens() {
         const screens = ['start-screen', 'quiz-screen', 'results-screen'];
         screens.forEach(screenId => {
@@ -371,6 +505,11 @@ class QuizApp {
         });
     }
     
+    /**
+     * Adds an animation class to an element and removes it after the animation completes.
+     * @param {string} elementId - The ID of the element to animate
+     * @param {string} animationClass - The CSS animation class to apply
+     */
     addAnimation(elementId, animationClass) {
         const element = document.getElementById(elementId);
         element.classList.add(animationClass);
@@ -381,6 +520,11 @@ class QuizApp {
         }, 500);
     }
     
+    /**
+     * Handles keyboard events for accessibility and navigation.
+     * Supports number keys (1-4) for option selection, Enter for submit, and Escape for navigation.
+     * @param {KeyboardEvent} e - The keyboard event object
+     */
     handleKeyboard(e) {
         // Handle option selection with number keys (1-4)
         if (e.key >= '1' && e.key <= '4' && !this.answered) {
@@ -405,6 +549,11 @@ class QuizApp {
         }
     }
     
+    /**
+     * Announces a message to screen readers using ARIA live regions.
+     * Creates a temporary element with aria-live attribute for screen reader announcements.
+     * @param {string} message - The message to announce to screen readers
+     */
     announceToScreenReader(message) {
         // Create a temporary element for screen reader announcements
         const announcement = document.createElement('div');
@@ -421,6 +570,11 @@ class QuizApp {
         }, 1000);
     }
     
+    /**
+     * Shows an error notification to the user.
+     * Creates a styled error message that appears at the top of the screen and auto-removes after 5 seconds.
+     * @param {string} message - The error message to display
+     */
     showError(message) {
         // Create error notification
         const errorDiv = document.createElement('div');

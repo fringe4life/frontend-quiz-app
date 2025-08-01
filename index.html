@@ -45,7 +45,7 @@
         <main class="main">
             <div class="container">
                 <!-- Start Screen -->
-                <section class="start-screen screen-visible" id="start-screen">
+                <section class="screen start-screen screen-visible" id="start-screen">
                     <div class="welcome-section">
                         <h1 class="welcome-title">
                             <span class="welcome-subtitle">Welcome to the</span>
@@ -60,8 +60,8 @@
                 </section>
 
                 <!-- Quiz Screen -->
-                <section class="quiz-screen screen-hidden" id="quiz-screen">
-                    <div class="question-text-container">
+                <section class="screen quiz-screen screen-hidden" id="quiz-screen">
+                    <div class="container-grid question-text-container">
                         <div class="question-counter">
                             <span class="question-number" id="question-number">1</span>
                             <span class="question-total">of <span id="question-total">10</span></span>
@@ -72,8 +72,8 @@
                         </div>
                     </div>
 
-                    <div class="answer-options-container">
-                        <div class="options-grid" id="options-grid">
+                    <div class="container-grid answer-options-container">
+                        <div class="container-grid options-grid" id="options-grid">
                             <!-- Options will be populated by JavaScript -->
                         </div>
 
@@ -84,8 +84,8 @@
                 </section>
 
                 <!-- Results Screen -->
-                <section class="results-screen screen-hidden" id="results-screen">
-                    <div class="results-header">
+                <section class="screen results-screen screen-hidden" id="results-screen">
+                    <div class="container-grid results-header">
                         <h1 class="results-title">Quiz completed!</h1>
                         <h2 class="results-subtitle">You scored...</h2>
                     </div>
@@ -97,13 +97,13 @@
                             </div>
                             <h3 class="subject-name" id="results-subject-name"></h3>
                         </div>
-                        <div class="score-display">
+                        <div class="container-grid score-display">
                             <span class="score-number" id="score-number">0</span>
                             <span class="score-total">out of <span id="results-total">10</span></span>
                         </div>
                     </div>
 
-                    <div class="results-actions">
+                    <div class="container-grid results-actions">
                         <button class="btn btn-primary center" id="play-again-btn">Play Again</button>
                         <button class="btn btn-secondary center" id="back-to-menu-btn">Back to Menu</button>
                     </div>
