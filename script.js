@@ -175,7 +175,7 @@ class QuizApp {
             <div class="subject-icon center" data-subject="${quiz.title}">
                 <img src="${quiz.icon}" alt="${quiz.title} icon" width="40" height="40">
             </div>
-            <h2 class="subject-card-title">${quiz.title}</h2>
+            <h2 class="subject-card-title subtitle">${quiz.title}</h2>
         `;
         
         card.addEventListener('click', () => this.selectSubject(index));
@@ -310,7 +310,7 @@ class QuizApp {
             <div class="option-letter center">
                 <span class="letter-text">${letter}</span>
             </div>
-            <div class="option-text">${escapedOptionText}</div>
+            <div class="option-text subtitle">${escapedOptionText}</div>
             <div class="option-icon">
                 <img src="./assets/images/icon-correct.svg" alt="Correct answer" width="40" height="40" class="correct-icon hidden">
                 <img src="./assets/images/icon-incorrect.svg" alt="Incorrect answer" width="40" height="40" class="incorrect-icon hidden">

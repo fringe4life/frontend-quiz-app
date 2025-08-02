@@ -23,7 +23,7 @@
                         <div class="subject-icon center">
                             <img src="" alt="" id="subject-icon-img">
                         </div>
-                        <h1 class="subject-title" id="subject-title"></h1>
+                        <h1 class="subject-title subtitle" id="subject-title"></h1>
                     </div>
                     
                     <button class="theme-toggle between" id="theme-toggle" aria-label="Toggle theme">
@@ -47,10 +47,14 @@
                 <!-- Start Screen -->
                 <section class="screen start-screen screen-visible" id="start-screen">
                     <div class="welcome-section">
-                        <h1 class="welcome-title">
+                        <!-- <h1 class="welcome-title">
                             <span class="welcome-subtitle">Welcome to the</span>
                             <span class="welcome-main">Frontend Quiz!</span>
-                        </h1>
+                        </h1> -->
+                        <div class="container-grid results-header">
+                            <h1 class="heading title">Welcome to the</h1>
+                            <h2 class="heading subtitle">Frontend Quiz!</h2>
+                        </div>
                         <p class="welcome-description">Pick a subject to get started.</p>
                     </div>
                     
@@ -63,10 +67,10 @@
                 <section class="screen quiz-screen screen-hidden" id="quiz-screen">
                     <div class="container-grid question-text-container">
                         <div class="question-counter">
-                            <span class="question-number" id="question-number">1</span>
+                            <span class="question-number subtitle" id="question-number">1</span>
                             <span class="question-total">of <span id="question-total">10</span></span>
                         </div>
-                        <h2 class="question-text" id="question-text"></h2>
+                        <h2 class="question-text heading subtitle" id="question-text"></h2>
                         <div class="progress-bar">
                             <div class="progress-fill" id="progress-fill"></div>
                         </div>
@@ -86,8 +90,8 @@
                 <!-- Results Screen -->
                 <section class="screen results-screen screen-hidden" id="results-screen">
                     <div class="container-grid results-header">
-                        <h1 class="results-title">Quiz completed!</h1>
-                        <h2 class="results-subtitle">You scored...</h2>
+                        <h1 class="heading title">Quiz completed!</h1>
+                        <h2 class="heading subtitle">You scored...</h2>
                     </div>
 
                     <div class="score-card">
@@ -98,7 +102,7 @@
                             <h3 class="subject-name" id="results-subject-name"></h3>
                         </div>
                         <div class="container-grid score-display">
-                            <span class="score-number" id="score-number">0</span>
+                            <span class="score-number subtitle" id="score-number">0</span>
                             <span class="score-total">out of <span id="results-total">10</span></span>
                         </div>
                     </div>

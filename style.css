@@ -10,6 +10,10 @@ button {
      cursor: pointer;
 }
 
+h1, h2 {
+    line-height: 1;
+}
+
 /* Utility Classes for Common Layout Patterns */
 .center {
     display: flex;
@@ -91,6 +95,7 @@ button {
     --spacing-xl: 3rem; /* 48px */
     --spacing-2xl: 4rem; /* 64px */
     --spacing-2xl-5: 2.5rem; /* 40px */
+    --spacing-3xl-5: 6.125rem; /* 98px */
     --spacing-3xl: 8rem; /* 128px */
     --spacing-4xl: 11.5rem; /* 184px */
     --spacing-5xl: 8.75rem; /* 140px */
@@ -147,9 +152,9 @@ body {
 }
 
 /* App Layout */
-.app {
+/* .app {
     overflow: hidden; 
-}
+} */
 
 /* Background Pattern */
 .background-pattern {
@@ -166,7 +171,7 @@ body {
 
 /* Header */
 .header {
-    padding: 98px 0 0 0; /* 98px top padding to position theme toggle */
+    padding: var(--spacing-3xl-5) 0 0 0; /* 98px top padding to position theme toggle */
 }
 
 .subject-info {
@@ -211,7 +216,6 @@ body {
 
 .subject-title {
     font-size: var(--font-size-lg);
-    font-weight: 500;
     color: var(--color-text-primary);
 }
 
@@ -252,7 +256,6 @@ body {
     background-color: white;
     border-radius: 50%;
     transition: translate var(--transition-normal);
-   
 }
 
 [data-theme="dark"] .toggle-thumb {
@@ -261,7 +264,7 @@ body {
 
 /* Main Content */
 .main {
-    padding: 127px 0 0 0; /* 127px spacing from header to main content */
+    padding: var(--spacing-3xl-5) 0 0 0; /* 98px spacing from header to main content */
 }
 
 /* Base Screen Layout */
@@ -269,7 +272,6 @@ body {
     display: grid;
     grid-template-columns: 29rem 1fr;
     max-inline-size: 72.5rem; /* 1160px */
-    margin-inline: auto;
     contain: content;
 }
 
@@ -285,19 +287,16 @@ body {
     grid-template-rows: min-content min-content;
 }
 
-
-:is(.welcome-subtitle, .welcome-main) {
-    display: block;
+.heading {
     font-size: var(--font-size-2xl);
     color: var(--color-text-primary);
-    line-height: 1;
 }
 
-.welcome-subtitle {
+.title {
     font-weight: 300;
 }
 
-.welcome-main {
+.subtitle {
     font-weight: 500;
 }
 
@@ -312,7 +311,6 @@ body {
 .subjects-grid {
     display: grid;
     gap: var(--spacing-md);
-    
 }
 
 .subject-card {
@@ -341,7 +339,6 @@ body {
 
 .subject-card-title {
     font-size: var(--font-size-lg);
-    font-weight: 500;
     color: var(--color-text-primary);
 }
 
@@ -362,9 +359,6 @@ body {
 }
 
 .question-text {
-    font-size: var(--font-size-2xl);
-    font-weight: 500;
-    color: var(--color-text-primary);
     line-height: 1.2;
     margin-bottom: var(--spacing-4xl); /* 184px gap before progress bar */
 }
@@ -382,7 +376,6 @@ body {
 
 .question-number {
     font-size: var(--font-size-xl);
-    font-weight: 500;
     color: var(--color-text-primary);
 }
 
@@ -455,8 +448,6 @@ body {
     font-weight: 500;
     color: var(--color-text-secondary);
     transition: color var(--transition-normal), background-color var(--transition-normal);
- 
-
     contain: strict;
 }
 
@@ -468,7 +459,6 @@ body {
 
 .option-text {
     font-size: var(--font-size-lg);
-    font-weight: 500;
     flex: 1;
 }
 
@@ -545,10 +535,6 @@ body {
     color: white;
 }
 
-/* .submit-btn {
-    inline-size: 100%;
-} */
-
 /* Results Screen */
 .results-screen {
     gap: var(--spacing-6xl); /* 144px gap at desktop */
@@ -559,21 +545,7 @@ body {
     grid-template-rows: min-content min-content;
 }
 
-:is(.results-title, .results-subtitle) {
-    font-weight: 500;
-}
-
-.results-title {
-    font-size: var(--font-size-2xl);
-    font-weight: 500;
-    color: var(--color-text-primary);
-}
-
-.results-subtitle {
-    font-size: var(--font-size-2xl);
-    font-weight: 500;
-    color: var(--color-text-primary);
-}
+/*  */
 
 .score-card {
     background-color: var(--color-card);
@@ -596,7 +568,6 @@ body {
 
 .score-number {
     font-size: var(--font-size-3xl);
-    font-weight: 500;
     color: var(--color-text-primary);
     line-height: 1;
 }
@@ -651,9 +622,7 @@ body {
         gap: var(--spacing-xl);
     }
     
-    .question-text-container .question-text {
-        margin-bottom: var(--spacing-lg); /* 40px gap at tablet */
-    }
+.question-text {margin-block-end: 0;}
     
     .results-screen {
         gap: var(--spacing-2xl); /* 64px gap at tablet */
@@ -673,25 +642,19 @@ body {
     }
     
     .header {
-        padding: 32px 0 0 0; /* 32px top padding for mobile */
+        padding: 2rem 0 0 0; /* 32px top padding for mobile */
     }
     
     .main {
-        padding: 46px 0 0 0; /* 46px spacing from header to main content for mobile */
+        padding: 2.875rem 0 0 0; /* 46px spacing from header to main content for mobile */
     }
-    
 
-    
     .score-card {
         padding: var(--spacing-xl);
     }
     
     .score-number {
         font-size: 5.5rem; /* 88px - mobile */
-    }
-    
-    .question-text-container .question-text {
-        margin-bottom: var(--spacing-md); /* 24px gap at mobile */
     }
 
     .options-grid {
