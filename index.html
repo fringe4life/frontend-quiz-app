@@ -116,6 +116,24 @@
         </main>
     </div>
 
-    <script src="./script.js"></script>
+    <template id="subjectTemplate">
+        <div class="subject-icon center" data-subject="">
+          <img src="" alt="" width="40" height="40">
+        </div>
+        <h2 class="subject-card-title subtitle"></h2>
+      </template>
+
+      <template id="optionTemplate">
+        <div class="option-letter center subtitle">
+          <span class="letter-text"></span>
+        </div>
+        <div class="option-text subtitle"></div>
+        <div class="option-icon">
+          <img src="./assets/images/icon-correct.svg" alt="Correct answer" width="40" height="40" class="correct-icon hidden">
+          <img src="./assets/images/icon-incorrect.svg" alt="Incorrect answer" width="40" height="40" class="incorrect-icon hidden">
+        </div>
+      </template>
+
+    <script src="./script.js" type="module"></script>
 </body>
 </html> 

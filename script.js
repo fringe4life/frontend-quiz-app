@@ -170,13 +170,25 @@ class QuizApp {
         card.setAttribute('role', 'button');
         card.setAttribute('tabindex', '0');
         card.setAttribute('aria-label', `Start ${quiz.title} quiz`);
-        
-        card.innerHTML = `
-            <div class="subject-icon center" data-subject="${quiz.title}">
-                <img src="${quiz.icon}" alt="${quiz.title} icon" width="40" height="40">
-            </div>
-            <h2 class="subject-card-title subtitle">${quiz.title}</h2>
-        `;
+
+        const template = document.getElementById('subjectTemplate');
+  
+        // Clone its content
+        const clone = template.content.cloneNode(true);
+      
+        // Query elements within the clone
+        const iconDiv = clone.querySelector('.subject-icon');
+        const img = clone.querySelector('img');
+        const titleHeading = clone.querySelector('.subject-card-title');
+      
+        // Set dynamic values
+        iconDiv.setAttribute('data-subject', quiz.title);
+        img.src = quiz.icon;
+        img.alt = `${quiz.title} icon`;
+        titleHeading.textContent = quiz.title;
+      
+        // Append to desired container (e.g., body or a specific element)
+        card.appendChild(clone);
         
         card.addEventListener('click', () => this.selectSubject(index));
         card.addEventListener('keydown', (e) => {
@@ -305,17 +317,18 @@ class QuizApp {
         
         // Escape the option text to display HTML tags as text
         const escapedOptionText = this.escapeHtml(optionText);
-        
-        card.innerHTML = `
-            <div class="option-letter center subtitle">
-                <span class="letter-text">${letter}</span>
-            </div>
-            <div class="option-text subtitle">${escapedOptionText}</div>
-            <div class="option-icon">
-                <img src="./assets/images/icon-correct.svg" alt="Correct answer" width="40" height="40" class="correct-icon hidden">
-                <img src="./assets/images/icon-incorrect.svg" alt="Incorrect answer" width="40" height="40" class="incorrect-icon hidden">
-            </div>
-        `;
+
+        const template = document.getElementById('optionTemplate');
+        const clone = template.content.cloneNode(true);
+      
+        // Select elements in the cloned fragment
+        const letterSpan = clone.querySelector('.letter-text');
+        const optionTextDiv = clone.querySelector('.option-text');
+      
+        // Set dynamic text
+        letterSpan.textContent = letter;
+        optionTextDiv.innerHTML = escapedOptionText;
+        card.appendChild(clone);
         
         card.addEventListener('click', () => this.selectOption(index));
         card.addEventListener('keydown', (e) => {

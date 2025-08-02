@@ -586,12 +586,8 @@ body {
         padding: 0 var(--spacing-2xl); /* 64px left and right for tablet */
     }
     
-    .header {
-        padding: 208px 0 0 0; /* 208px top padding for tablet */
-    }
-    
     .main {
-        padding: 75px 0 0 0; /* 75px spacing from header to main content for tablet */
+        padding: 76px 0 0 0; /* 76px spacing from header to main content for tablet */
     }
     
     /* Tablet background pattern */
