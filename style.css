@@ -1,3 +1,20 @@
+/* Font Face Declarations */
+@font-face {
+    font-family: 'Rubik';
+    src: url('./assets/fonts/Rubik-VariableFont_wght.ttf') format('truetype-variations');
+    font-weight: 300 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Rubik';
+    src: url('./assets/fonts/Rubik-Italic-VariableFont_wght.ttf') format('truetype-variations');
+    font-weight: 300 900;
+    font-style: italic;
+    font-display: swap;
+}
+
 /* CSS Reset and Base Styles */
 * {
     margin: 0;
@@ -74,7 +91,7 @@ h1, h2 {
     /* Subject Colors */
     --color-subject-html: hsl(48, 96%, 89%);
     --color-subject-css: hsl(142, 76%, 36%);
-    --color-subject-javascript: hsl(221, 83%, 53%);
+    --color-subject-javascript: hsl(225, 100%, 96%);
     --color-subject-accessibility: hsl(270, 50%, 60%);
     
     /* Typography */
@@ -182,7 +199,6 @@ body {
 .subject-icon {
     inline-size: var(--icon-size-large);
     border-radius: var(--radius-sm);
-    background-color: var(--color-primary); /* Default fallback */
     contain: strict;
 }
 
@@ -478,7 +494,7 @@ body {
 .btn {
     padding: var(--spacing-md) var(--spacing-xl);
     border-radius: var(--radius-md);
-    font-family: var(--font-family);
+    font-family: inherit;
     font-size: var(--font-size-base);
     font-weight: 500;
     text-decoration: none;
