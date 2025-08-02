@@ -307,7 +307,7 @@ class QuizApp {
         const escapedOptionText = this.escapeHtml(optionText);
         
         card.innerHTML = `
-            <div class="option-letter center">
+            <div class="option-letter center subtitle">
                 <span class="letter-text">${letter}</span>
             </div>
             <div class="option-text subtitle">${escapedOptionText}</div>

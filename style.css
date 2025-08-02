@@ -445,7 +445,6 @@ body {
     border-radius: var(--radius-xs);
     background-color: var(--color-border);
     font-size: var(--font-size-base);
-    font-weight: 500;
     color: var(--color-text-secondary);
     transition: color var(--transition-normal), background-color var(--transition-normal);
     contain: strict;
