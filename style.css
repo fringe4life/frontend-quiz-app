@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+button {
+     border: none;
+     cursor: pointer;
+}
+
 /* Utility Classes for Common Layout Patterns */
 .center {
     display: flex;
@@ -122,12 +127,11 @@
 /* Base Styles */
 html {
     color-scheme: light dark;
+    min-height: 100dvh;
     background-color: var(--color-background);
-
 }
 
 body {
-    min-height: 100dvh;
     font-family: var(--font-family);
     color: var(--color-text-primary);
     line-height: 1.5;
@@ -139,12 +143,12 @@ body {
     max-inline-size: var(--container-max-width);
     margin-inline: auto;
     padding-inline: var(--spacing-5xl); /* 140px left and right for desktop */
+    
 }
 
 /* App Layout */
 .app {
     overflow: hidden; 
-    contain: content;
 }
 
 /* Background Pattern */
@@ -178,7 +182,7 @@ body {
 }
 
 /* Icon aspect ratio consolidation using :is() */
-:is(.subject-icon, .subject-icon img, .toggle-thumb, .option-letter) {
+:is(.subject-icon, .subject-icon img, .toggle-thumb, .option-letter, .option-icon img, .toggle-thumb) {
     aspect-ratio: 1;
 }
 
@@ -215,8 +219,6 @@ body {
 .theme-toggle {
     gap: var(--spacing-sm);
     background: none;
-    border: none;
-    cursor: pointer;
     padding: var(--spacing-xs);
     border-radius: var(--radius-full);
     transition: background-color var(--transition-fast);
@@ -247,15 +249,14 @@ body {
 
 .toggle-thumb {
     inline-size: 1.25rem; /* 20px */
-    aspect-ratio: 1;
     background-color: white;
     border-radius: 50%;
-    transition: transform var(--transition-normal);
+    transition: translate var(--transition-normal);
    
 }
 
 [data-theme="dark"] .toggle-thumb {
-    transform: translateX(0.8125rem); /* 20px - available space minus thumb width */
+    translate: 0.8125rem 0;
 }
 
 /* Main Content */
@@ -268,7 +269,7 @@ body {
     display: grid;
     grid-template-columns: 29rem 1fr;
     max-inline-size: 72.5rem; /* 1160px */
-    /* margin-inline: auto; */
+    margin-inline: auto;
     contain: content;
 }
 
@@ -321,7 +322,7 @@ body {
     border-radius: var(--radius-md);
     border: 2px solid transparent;
     cursor: pointer;
-    transition: all var(--transition-normal);
+    transition: translate var(--transition-normal), border-color var(--transition-normal);
     text-decoration: none;
     color: inherit;
     position: relative;
@@ -331,7 +332,7 @@ body {
 
 .subject-card:hover {
     border-color: var(--color-primary);
-    transform: translateY(-2px);
+    translate: 0 -2px;
 }
 
 .subject-card:hover::after {
@@ -453,8 +454,9 @@ body {
     font-size: var(--font-size-base);
     font-weight: 500;
     color: var(--color-text-secondary);
-    transition: all var(--transition-normal);
-    position: relative;
+    transition: color var(--transition-normal), background-color var(--transition-normal);
+ 
+
     contain: strict;
 }
 
@@ -480,19 +482,17 @@ body {
     inset: 0;
     margin: auto;
     inline-size: var(--icon-size-small);
-    aspect-ratio: 1;
+ 
 }
 
 /* Buttons */
 .btn {
     padding: var(--spacing-md) var(--spacing-xl);
-    border: none;
     border-radius: var(--radius-md);
     font-family: var(--font-family);
     font-size: var(--font-size-base);
     font-weight: 500;
     text-decoration: none;
-    cursor: pointer;
     transition: all var(--transition-normal);
     position: relative;
 }
@@ -522,7 +522,7 @@ body {
 }
 
 :is(.btn-primary:hover:not(:disabled), .btn-secondary:hover:not(:disabled)) {
-    transform: translateY(-2px);
+    translate: 0 -2px;
 }
 
 :is(.btn-primary:hover:not(:disabled), .btn-secondary:hover:not(:disabled))::after {
@@ -756,33 +756,33 @@ body {
 @keyframes --fade-in {
     from {
         opacity: 0;
-        transform: translateY(1rem);
+        translate: 0 1rem;
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        translate: 0 0;
     }
 }
 
 @keyframes --slide-in {
     from {
         opacity: 0;
-        transform: translateX(-2rem);
+        translate: -2rem 0;
     }
     to {
         opacity: 1;
-        transform: translateX(0);
+        translate: 0 0;
     }
 }
 
 @keyframes --scale-in {
     from {
         opacity: 0;
-        transform: scale(0.9);
+        scale: 0.9;
     }
     to {
         opacity: 1;
-        transform: scale(1);
+        scale: 1;
     }
 }
 
