@@ -122,11 +122,13 @@
 /* Base Styles */
 html {
     color-scheme: light dark;
+    background-color: var(--color-background);
+
 }
 
 body {
+    min-height: 100dvh;
     font-family: var(--font-family);
-    background-color: var(--color-background);
     color: var(--color-text-primary);
     line-height: 1.5;
     transition: background-color var(--transition-normal), color var(--transition-normal);
@@ -137,13 +139,10 @@ body {
     max-inline-size: var(--container-max-width);
     margin-inline: auto;
     padding-inline: var(--spacing-5xl); /* 140px left and right for desktop */
-    contain: content;
 }
 
 /* App Layout */
 .app {
-    min-height: 100svh;
-    position: relative;
     overflow: hidden; 
     contain: content;
 }
@@ -269,7 +268,7 @@ body {
     display: grid;
     grid-template-columns: 29rem 1fr;
     max-inline-size: 72.5rem; /* 1160px */
-    margin-inline: auto;
+    /* margin-inline: auto; */
     contain: content;
 }
 
@@ -432,7 +431,6 @@ body {
 
 .option-card:is(.selected, .correct, .incorrect) {
     border-color: var(--_state-color);
-    color: white;
 }
 
 /* Option card modifiers */
